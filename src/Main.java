@@ -8,7 +8,7 @@ public class Main {
         prePopulateVehicles(vehicles);
 
         System.out.println(initialSize + " vehicles have been pre-populated:");
-        Vehicle.printAllVehicles(vehicles);
+        Vehicle.dataConclusion(vehicles);
 
         // Prompt user to add more vehicles
         if (Reader.readBoolean("Would you like to add more vehicles? ")) {
@@ -17,7 +17,6 @@ public class Main {
         }
 
         // Print all vehicles
-        System.out.println("Final list of vehicles:");
         Vehicle.printAllVehicles(vehicles);
 
         // Remove vehicle functionality

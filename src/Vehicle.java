@@ -69,10 +69,11 @@ public abstract class Vehicle {
 
     // Methods moved from Main
     public static void printAllVehicles(Vehicle[] vehicles) {
-        System.out.println("Here are all your vehicles:");
-        for (Vehicle vehicle : vehicles) {
-            if (vehicle != null) {
-                vehicle.printDetails();
+        if (Reader.readBoolean("Would you like an output of all current vehicles?")) {
+            for (Vehicle vehicle : vehicles) {
+                if (vehicle != null) {
+                    vehicle.printDetails();
+                }
             }
         }
     }
