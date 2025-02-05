@@ -3,36 +3,50 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        int initialSize = 3; // Initial size for pre-populated vehicles
+        System.out.println("Welcome To The Vehicle Management System...");
+        int initialSize = 10; // Initial size for pre-populated vehicles
         Vehicle[] vehicles = new Vehicle[initialSize];
         prePopulateVehicles(vehicles);
 
         System.out.println(initialSize + " vehicles have been pre-populated:");
-        Vehicle.dataConclusion(vehicles);
 
-        // Prompt user to add more vehicles
-        if (Reader.readBoolean("Would you like to add more vehicles? ")) {
-            int numVehicles = Reader.readInt("How many vehicles are you adding? ");
-            vehicles = addVehicles(vehicles, numVehicles);
+        boolean exit = false;
+        while (!exit) {
+            System.out.println("\nPlease choose an option:");
+            System.out.println("1. Add a new vehicle");
+            System.out.println("2. Remove a vehicle");
+            System.out.println("3. Add or remove options to/from a vehicle");
+            System.out.println("4. Search for a vehicle");
+            System.out.println("5. Display all vehicles");
+            System.out.println("6. Exit");
+
+            int choice = Reader.readInt("Enter your choice: ");
+
+            switch (choice) {
+                case 1:
+                    int numVehicles = Reader.readInt("How many vehicles are you adding? ");
+                    vehicles = addVehicles(vehicles, numVehicles);
+                    break;
+                case 2:
+                    Vehicle.removeVehicle(vehicles);
+                    break;
+                case 3:
+                    modifyVehicleOptions(vehicles);
+                    break;
+                case 4:
+                    searchVehicle(vehicles);
+                    break;
+                case 5:
+                    Vehicle.printAllVehicles(vehicles);
+                    break;
+                case 6:
+                    exit = true;
+                    System.out.println("Exiting the system. Goodbye!");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
         }
-
-        // Print all vehicles
-        Vehicle.printAllVehicles(vehicles);
-
-        // Remove vehicle functionality
-        Vehicle.removeVehicle(vehicles);
-
-        // Ask to remove motorbike modifications
-        Vehicle.removeMotorbikeOptions(vehicles);
-
-        // Option to change colour
-        Vehicle.setColour(vehicles);
-
-        // Option to change mileage
-        Vehicle.setMileage(vehicles);
-
-        // Revised PrintDetails
-        Vehicle.dataConclusion(vehicles);
     }
 
     private static void prePopulateVehicles(Vehicle[] vehicles) {
@@ -44,6 +58,24 @@ public class Main {
         vehicles[2] = new Car("Ford", "Fiesta ST", 2015, Gearbox.AUTO, CarColour.BLUE, 20000, "08767890", BodyType.Body.HATCHBACK);
         vehicles[2].addOption(Option.PARKING_SENSORS);
         vehicles[2].addOption(Option.ROOF_RACK);
+
+        vehicles[3] = new Car("Honda", "Civic", 2018, Gearbox.MANUAL, CarColour.BLACK, 12000, "12345678", BodyType.Body.HATCHBACK);
+
+        vehicles[4] = new Motorbike("Yamaha", "MT-07", 2020, Gearbox.MANUAL, CarColour.BLUE, 3000, "87654321");
+
+        vehicles[5] = new Car("BMW", "X5", 2021, Gearbox.AUTO, CarColour.WHITE, 10000, "23456789", BodyType.Body.SUV);
+        vehicles[5].addOption(Option.TOW_BAR);
+
+        vehicles[6] = new Car("Audi", "A4", 2019, Gearbox.AUTO, CarColour.SILVER, 15000, "34567890", BodyType.Body.ESTATE);
+        vehicles[6].addOption(Option.ROOF_RACK);
+        vehicles[6].addOption(Option.THIRD_ROW_SEAT);
+
+        vehicles[7] = new Motorbike("Ducati", "Panigale V4", 2022, Gearbox.MANUAL, CarColour.RED, 2000, "45678901");
+
+        vehicles[8] = new Car("Mercedes-Benz", "C-Class", 2020, Gearbox.AUTO, CarColour.GREY, 8000, "56789012", BodyType.Body.SALOON);
+
+        vehicles[9] = new Car("Tesla", "Model 3", 2021, Gearbox.AUTO, CarColour.WHITE, 5000, "67890123", BodyType.Body.SALOON);
+        vehicles[9].addOption(Option.PARKING_SENSORS);
     }
 
     private static Vehicle[] addVehicles(Vehicle[] vehicles, int numVehicles) {
@@ -116,5 +148,35 @@ public class Main {
         if (Reader.readBoolean("Would you like to add a Luggage Box?")) {
             vehicles[index].addOption(Option.LUGGAGE_BOX);
         }
+    }
+
+    private static void modifyVehicleOptions(Vehicle[] vehicles) {
+        int index = Reader.readInt("Enter the number of the vehicle to modify options: ") - 1;
+        if (index >= 0 && index < vehicles.length && vehicles[index] != null) {
+            Vehicle vehicle = vehicles[index];
+            if (vehicle instanceof Car) {
+                BodyType.Body body = ((Car) vehicle).getBody();
+                addCarOptions(vehicle, body);
+            } else if (vehicle instanceof Motorbike) {
+                if (Reader.readBoolean("Add Luggage Box?")) {
+                    vehicle.addOption(Option.LUGGAGE_BOX);
+                } else if (Reader.readBoolean("Remove Luggage Box?")) {
+                    ((Motorbike) vehicle).removeOption(Option.LUGGAGE_BOX);
+                }
+            }
+        } else {
+            System.out.println("Invalid vehicle number.");
+        }
+    }
+
+    private static void searchVehicle(Vehicle[] vehicles) {
+        String vin = Reader.readLine("Enter the VIN of the vehicle to search: ");
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle != null && vehicle.getVIN().equalsIgnoreCase(vin)) {
+                vehicle.printDetails();
+                return;
+            }
+        }
+        System.out.println("Vehicle not found.");
     }
 }
