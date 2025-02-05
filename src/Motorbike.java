@@ -30,6 +30,7 @@ public class Motorbike extends Vehicle {
                         "Colour: " + getColour().toString().substring(0, 1).toUpperCase() + getColour().toString().substring(1).toLowerCase() + "\n" +
                         "Mileage: " + getMileage() + "\n" +
                         "VIN: " + getVIN() + "\n" +
-                        "Options: " + options);
+                        "Options: " + options
+                        + "\n");
     }
 }

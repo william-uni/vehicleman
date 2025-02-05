@@ -33,6 +33,7 @@ public class Car extends Vehicle {
                         "Mileage: " + getMileage() + "\n" +
                         "VIN: " + getVIN() + "\n" +
                         "Body Type: " + body.toString().substring(0, 1).toUpperCase() + body.toString().substring(1).toLowerCase() + "\n" +
-                        "Options: " + options);
+                        "Options: " + options
+                        + "\n");
     }
 }
