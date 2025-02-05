@@ -3,7 +3,7 @@ import devtools.util.Reader;
 public class Main {
     public static void main(String[] args) {
         System.out.println("Welcome To The Vehicle Management System...");
-        int initialSize = 10; // Initial size for pre-populated vehicles
+        int initialSize = 18; // Initial size for pre-populated vehicles
         Vehicle[] vehicles = new Vehicle[initialSize];
         prePopulateVehicles(vehicles);
 
@@ -58,31 +58,54 @@ public class Main {
     }
 
     private static void prePopulateVehicles(Vehicle[] vehicles) {
-        vehicles[0] = new Car("Toyota", "Yaris T Sport", 2005, Gearbox.MANUAL, CarColour.RED, 15000, "86512345", BodyType.Body.HATCHBACK);
+        vehicles[0] = new Car("Toyota", "Yaris T Sport", 2005, Gearbox.MANUAL, CarColour.RED, 15000, BodyType.Body.HATCHBACK);
         vehicles[0].addOption(Option.SAT_NAV);
 
-        vehicles[1] = new Motorbike("Kawasaki", "Ninja", 2017, Gearbox.MANUAL, CarColour.GREEN, 5000, "54365421");
+        vehicles[1] = new Motorbike("Kawasaki", "Ninja", 2017, Gearbox.MANUAL, CarColour.GREEN, 5000);
 
-        vehicles[2] = new Car("Ford", "Fiesta ST", 2015, Gearbox.AUTO, CarColour.BLUE, 20000, "08767890", BodyType.Body.HATCHBACK);
+        vehicles[2] = new Car("Ford", "Fiesta ST", 2015, Gearbox.AUTO, CarColour.BLUE, 20000, BodyType.Body.HATCHBACK);
         vehicles[2].addOption(Option.PARKING_SENSORS);
         vehicles[2].addOption(Option.ROOF_RACK);
 
-        vehicles[3] = new Car("Honda", "Civic", 2018, Gearbox.MANUAL, CarColour.BLACK, 12000, "12345678", BodyType.Body.HATCHBACK);
+        vehicles[3] = new Car("Honda", "Civic", 2018, Gearbox.MANUAL, CarColour.BLACK, 12000, BodyType.Body.HATCHBACK);
 
-        vehicles[4] = new Motorbike("Yamaha", "MT-07", 2020, Gearbox.MANUAL, CarColour.BLUE, 3000, "87654321");
+        vehicles[4] = new Motorbike("Yamaha", "MT-07", 2020, Gearbox.MANUAL, CarColour.BLUE, 3000);
 
-        vehicles[5] = new Car("BMW", "X5", 2021, Gearbox.AUTO, CarColour.WHITE, 10000, "23456789", BodyType.Body.SUV);
+        vehicles[5] = new Car("BMW", "X5", 2021, Gearbox.AUTO, CarColour.WHITE, 10000, BodyType.Body.SUV);
         vehicles[5].addOption(Option.TOW_BAR);
 
-        vehicles[6] = new Car("Audi", "A4", 2019, Gearbox.AUTO, CarColour.SILVER, 15000, "34567890", BodyType.Body.ESTATE);
+        vehicles[6] = new Car("Audi", "A4", 2019, Gearbox.AUTO, CarColour.SILVER, 15000, BodyType.Body.ESTATE);
         vehicles[6].addOption(Option.ROOF_RACK);
         vehicles[6].addOption(Option.THIRD_ROW_SEAT);
 
-        vehicles[7] = new Motorbike("Ducati", "Panigale V4", 2022, Gearbox.MANUAL, CarColour.RED, 2000, "45678901");
+        vehicles[7] = new Motorbike("Ducati", "Panigale V4", 2022, Gearbox.MANUAL, CarColour.RED, 2000);
 
-        vehicles[8] = new Car("Mercedes-Benz", "C-Class", 2020, Gearbox.AUTO, CarColour.GREY, 8000, "56789012", BodyType.Body.SALOON);
+        vehicles[8] = new Car("Mercedes-Benz", "C-Class", 2020, Gearbox.AUTO, CarColour.GREY, 8000, BodyType.Body.SALOON);
 
-        vehicles[9] = new Car("Tesla", "Model 3", 2021, Gearbox.AUTO, CarColour.WHITE, 5000, "67890123", BodyType.Body.SALOON);
+        vehicles[9] = new Car("Tesla", "Model 3", 2021, Gearbox.AUTO, CarColour.WHITE, 5000, BodyType.Body.SALOON);
         vehicles[9].addOption(Option.PARKING_SENSORS);
+
+        vehicles[10] = new Car("BMW", "3 Series", 2005, Gearbox.MANUAL, CarColour.BLACK, 120000, BodyType.Body.SALOON);
+
+        vehicles[11] = new Car("BMW", "5 Series", 2008, Gearbox.AUTO, CarColour.SILVER, 90000, BodyType.Body.ESTATE);
+
+        vehicles[12] = new Car("BMW", "7 Series", 2003, Gearbox.AUTO, CarColour.BLUE, 150000, BodyType.Body.SALOON);
+
+        vehicles[13] = new Car("BMW", "330d", 2007, Gearbox.MANUAL, CarColour.WHITE, 80000, BodyType.Body.SUV);
+        vehicles[13].addOption(Option.PARKING_SENSORS);
+        vehicles[13].addOption(Option.TOW_BAR);
+
+        vehicles[14] = new Car("BMW", "M3 Competition", 2010, Gearbox.MANUAL, CarColour.RED, 60000, BodyType.Body.SALOON);
+
+        vehicles[15] = new Car("VW", "Scirocco", 1990, Gearbox.MANUAL, CarColour.RED, 70000, BodyType.Body.HATCHBACK);
+
+        vehicles[16] = new Car("VW", "Passat", 2009, Gearbox.AUTO, CarColour.GREY, 85000, BodyType.Body.ESTATE);
+        vehicles[16].addOption(Option.ROOF_RACK);
+        vehicles[16].addOption(Option.THIRD_ROW_SEAT);
+        vehicles[16].addOption(Option.TOW_BAR);
+
+        vehicles[17] = new Car("VW", "Touareg", 2008, Gearbox.AUTO, CarColour.GREEN, 95000, BodyType.Body.SUV);
+        vehicles[17].addOption(Option.TOW_BAR);
+        vehicles[17].addOption(Option.ROOF_RACK);
     }
 }

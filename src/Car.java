@@ -1,11 +1,11 @@
 import java.util.ArrayList;
 
 public class Car extends Vehicle {
-    private BodyType.Body body;
-    private ArrayList<Option> options;
+    private final BodyType.Body body;
+    private final ArrayList<Option> options;
 
-    public Car(String make, String model, int year, Gearbox gearbox, CarColour colour, int mileage, String VIN, BodyType.Body body) {
-        super(make, model, year, gearbox, colour, mileage, VIN);
+    public Car(String make, String model, int year, Gearbox gearbox, CarColour colour, int mileage, BodyType.Body body) {
+        super(make, model, year, gearbox, colour, mileage);
         this.body = body;
         this.options = new ArrayList<>();
     }

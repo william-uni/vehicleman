@@ -6,62 +6,20 @@ public abstract class Vehicle {
     private final String model;
     private final int year;
     private final Gearbox gearbox; // Type
+    private final String VIN;
     private CarColour colour;
     private int mileage;
-    private final String VIN;
 
     // Constructor To Initialise Values / Take the Class Value
-    public Vehicle(String make, String model, int year, Gearbox gearbox, CarColour colour, int mileage, String VIN) {
+    public Vehicle(String make, String model, int year, Gearbox gearbox, CarColour colour, int mileage) {
         this.make = make;
         this.model = model;
         this.year = year;
         this.gearbox = gearbox;
         this.colour = colour;
         this.mileage = mileage;
-        this.VIN = VIN;
+        this.VIN = VINGen.generateVIN(); // Automatically generate VIN
     }
-
-    // Getters
-    public String getMake() {
-        return make;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public Gearbox getGearbox() {
-        return gearbox;
-    }
-
-    public String getVIN() {
-        return VIN;
-    }
-
-    public CarColour getColour() {
-        return colour;
-    }
-
-    public int getMileage() {
-        return mileage;
-    }
-
-    // Setters
-    public void setColour(CarColour colour) {
-        this.colour = colour;
-    }
-
-    public void setMileage(int mileage) {
-        this.mileage = mileage;
-    }
-
-    // Option Functionality Implementation
-    public abstract void addOption(Option options);
-    public abstract void printDetails();
 
     // Methods moved from Main
     public static void printAllVehicles(Vehicle[] vehicles) {
@@ -92,7 +50,6 @@ public abstract class Vehicle {
     }
 
     public static void removeVehicle(Vehicle[] vehicles) {
-        if (Reader.readBoolean("Do you want to remove any vehicles?")) {
             System.out.println("Vehicles in the database:");
             for (int i = 0; i < vehicles.length; i++) {
                 if (vehicles[i] != null) {
@@ -115,37 +72,6 @@ public abstract class Vehicle {
                 System.out.println("Invalid choice. No vehicle removed.");
             }
         }
-    }
-
-    public static void setColour(Vehicle[] vehicles) {
-        System.out.println("Collating each vehicle and their colour...");
-        for (int i = 0; i < vehicles.length; i++) {
-            if (vehicles[i] != null) {
-                System.out.println("\n" + (i + 1) + ": " + vehicles[i].getMake() + " " + vehicles[i].getModel() + " " + vehicles[i].getColour());
-                if (Reader.readBoolean("Would you like to change the colour?")) {
-                    CarColour newColour = Reader.readEnum("What colour would you like to change it to? ", CarColour.class);
-                    vehicles[i].setColour(newColour);
-                    System.out.println("Here are the updated details: ");
-                    System.out.println(vehicles[i].getMake() + " " + vehicles[i].getModel() + " " + vehicles[i].getColour());
-                }
-            }
-        }
-    }
-
-    public static void setMileage(Vehicle[] vehicles) {
-        System.out.println("Collating each vehicle and their mileage...");
-        for (int i = 0; i < vehicles.length; i++) {
-            if (vehicles[i] != null) {
-                System.out.println("\n" + (i + 1) + ": " + vehicles[i].getMake() + " " + vehicles[i].getModel() + " " + vehicles[i].getMileage() + " Miles");
-                if (Reader.readBoolean("Would you like to change the mileage?")) {
-                    int newMileage = Reader.readInt("What mileage would you like to change it to? ");
-                    vehicles[i].setMileage(newMileage);
-                    System.out.println("Here are the updated details: ");
-                    System.out.println(vehicles[i].getMake() + " " + vehicles[i].getModel() + " " + vehicles[i].getMileage() + " Miles");
-                }
-            }
-        }
-    }
 
     public static void dataConclusion(Vehicle[] vehicles) {
         if (Reader.readBoolean("Would you like an output of all current vehicles?")) {
@@ -181,10 +107,9 @@ public abstract class Vehicle {
         Gearbox gearbox = Reader.readEnum("Please enter the gearbox type (Manual or Auto): ", Gearbox.class);
         CarColour colour = Reader.readEnum("Please enter the colour: ", CarColour.class);
         int mileage = Reader.readInt("Please enter the mileage: ");
-        String VIN = Reader.readLine("Please enter the VIN: ");
         BodyType.Body body = Reader.readEnum("Is the car a Saloon, Estate, Hatchback or SUV? ", BodyType.Body.class);
 
-        vehicles[index] = new Car(make, model, year, gearbox, colour, mileage, VIN, body);
+        vehicles[index] = new Car(make, model, year, gearbox, colour, mileage, body);
 
         if (Reader.readBoolean("Would you like to add any options to the car?")) {
             addCarOptions(vehicles[index], body);
@@ -221,9 +146,8 @@ public abstract class Vehicle {
         Gearbox gearbox = Reader.readEnum("Please enter the gearbox type (Manual or Auto): ", Gearbox.class);
         CarColour colour = Reader.readEnum("Please enter the colour: ", CarColour.class);
         int mileage = Reader.readInt("Please enter the mileage: ");
-        String VIN = Reader.readLine("Please enter the VIN: ");
 
-        vehicles[index] = new Motorbike(make, model, year, gearbox, colour, mileage, VIN);
+        vehicles[index] = new Motorbike(make, model, year, gearbox, colour, mileage);
 
         if (Reader.readBoolean("Would you like to add a Luggage Box?")) {
             vehicles[index].addOption(Option.LUGGAGE_BOX);
@@ -286,4 +210,77 @@ public abstract class Vehicle {
             System.out.println("Invalid choice. Please try again.");
         }
     }
+
+    // Getters
+    public String getMake() {
+        return make;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public Gearbox getGearbox() {
+        return gearbox;
+    }
+
+    public String getVIN() {
+        return VIN;
+    }
+
+    public CarColour getColour() {
+        return colour;
+    }
+
+    // Setters
+    public void setColour(CarColour colour) {
+        this.colour = colour;
+    }
+
+    public static void setColour(Vehicle[] vehicles) {
+        System.out.println("Collating each vehicle and their colour...");
+        for (int i = 0; i < vehicles.length; i++) {
+            if (vehicles[i] != null) {
+                System.out.println("\n" + (i + 1) + ": " + vehicles[i].getMake() + " " + vehicles[i].getModel() + " " + vehicles[i].getColour());
+                if (Reader.readBoolean("Would you like to change the colour?")) {
+                    CarColour newColour = Reader.readEnum("What colour would you like to change it to? ", CarColour.class);
+                    vehicles[i].setColour(newColour);
+                    System.out.println("Here are the updated details: ");
+                    System.out.println(vehicles[i].getMake() + " " + vehicles[i].getModel() + " " + vehicles[i].getColour());
+                }
+            }
+        }
+    }
+
+    public int getMileage() {
+        return mileage;
+    }
+
+    public void setMileage(int mileage) {
+        this.mileage = mileage;
+    }
+
+    public static void setMileage(Vehicle[] vehicles) {
+        System.out.println("Collating each vehicle and their mileage...");
+        for (int i = 0; i < vehicles.length; i++) {
+            if (vehicles[i] != null) {
+                System.out.println("\n" + (i + 1) + ": " + vehicles[i].getMake() + " " + vehicles[i].getModel() + " " + vehicles[i].getMileage() + " Miles");
+                if (Reader.readBoolean("Would you like to change the mileage?")) {
+                    int newMileage = Reader.readInt("What mileage would you like to change it to? ");
+                    vehicles[i].setMileage(newMileage);
+                    System.out.println("Here are the updated details: ");
+                    System.out.println(vehicles[i].getMake() + " " + vehicles[i].getModel() + " " + vehicles[i].getMileage() + " Miles");
+                }
+            }
+        }
+    }
+
+    // Option Functionality Implementation
+    public abstract void addOption(Option options);
+
+    public abstract void printDetails();
 }
