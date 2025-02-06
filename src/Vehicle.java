@@ -242,17 +242,21 @@ public abstract class Vehicle {
     }
 
     public static void setColour(Vehicle[] vehicles) {
-        System.out.println("Collating each vehicle and their colour...");
+        System.out.println("Vehicles in the database:");
         for (int i = 0; i < vehicles.length; i++) {
             if (vehicles[i] != null) {
-                System.out.println("\n" + (i + 1) + ": " + vehicles[i].getMake() + " " + vehicles[i].getModel() + " " + vehicles[i].getColour());
-                if (Reader.readBoolean("Would you like to change the colour?")) {
-                    CarColour newColour = Reader.readEnum("What colour would you like to change it to? ", CarColour.class);
-                    vehicles[i].setColour(newColour);
-                    System.out.println("Here are the updated details: ");
-                    System.out.println(vehicles[i].getMake() + " " + vehicles[i].getModel() + " " + vehicles[i].getColour());
-                }
+                System.out.println((i + 1) + ": " + vehicles[i].getMake() + " " + vehicles[i].getModel() + " " + vehicles[i].getColour());
             }
+        }
+
+        int index = Reader.readInt("Enter the number of the vehicle to change colour: ") - 1;
+
+        if (index >= 0 && index < vehicles.length && vehicles[index] != null) {
+            CarColour newColour = Reader.readEnum("What colour would you like to change it to? ", CarColour.class);
+            vehicles[index].setColour(newColour);
+            System.out.println("Updated details: " + vehicles[index].getMake() + " " + vehicles[index].getModel() + " " + vehicles[index].getColour());
+        } else {
+            System.out.println("Invalid choice. No colour changed.");
         }
     }
 
@@ -265,17 +269,21 @@ public abstract class Vehicle {
     }
 
     public static void setMileage(Vehicle[] vehicles) {
-        System.out.println("Collating each vehicle and their mileage...");
+        System.out.println("Vehicles in the database:");
         for (int i = 0; i < vehicles.length; i++) {
             if (vehicles[i] != null) {
-                System.out.println("\n" + (i + 1) + ": " + vehicles[i].getMake() + " " + vehicles[i].getModel() + " " + vehicles[i].getMileage() + " Miles");
-                if (Reader.readBoolean("Would you like to change the mileage?")) {
-                    int newMileage = Reader.readInt("What mileage would you like to change it to? ");
-                    vehicles[i].setMileage(newMileage);
-                    System.out.println("Here are the updated details: ");
-                    System.out.println(vehicles[i].getMake() + " " + vehicles[i].getModel() + " " + vehicles[i].getMileage() + " Miles");
-                }
+                System.out.println((i + 1) + ": " + vehicles[i].getMake() + " " + vehicles[i].getModel() + " " + vehicles[i].getMileage() + " Miles");
             }
+        }
+
+        int index = Reader.readInt("Enter the number of the vehicle to change mileage: ") - 1;
+
+        if (index >= 0 && index < vehicles.length && vehicles[index] != null) {
+            int newMileage = Reader.readInt("What mileage would you like to change it to? ");
+            vehicles[index].setMileage(newMileage);
+            System.out.println("Updated details: " + vehicles[index].getMake() + " " + vehicles[index].getModel() + " " + vehicles[index].getMileage() + " Miles");
+        } else {
+            System.out.println("Invalid choice. No mileage changed.");
         }
     }
 
