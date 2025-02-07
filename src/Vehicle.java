@@ -89,7 +89,7 @@ public abstract class Vehicle {
         System.arraycopy(vehicles, 0, expandedVehicles, 0, vehicles.length);
 
         for (int i = vehicles.length; i < expandedVehicles.length; i++) {
-            String type = Reader.readPattern("Select vehicle type (1 for Car, 2 for Motorbike): ", "[12]", "Invalid selection. Please enter 1 for Car or 2 for Motorbike.");
+            String type = Reader.readPattern("Select vehicle type: " + "\n" + "1. Car" + "\n" + "2. Motorbike" + "\n" + "Option ", "[12]", "Invalid selection. Please enter 1 for Car or 2 for Motorbike.");
 
             if (type.equals("1")) {
                 addCar(expandedVehicles, i);
@@ -107,22 +107,39 @@ public abstract class Vehicle {
         Gearbox gearbox = Reader.readEnum("Please enter the gearbox type (Manual or Auto): ", Gearbox.class);
         CarColour colour = Reader.readEnum("Please enter the colour: ", CarColour.class);
         int mileage = Reader.readInt("Please enter the mileage: ");
-        String bodyType = Reader.readPattern("Is the car a Saloon, Estate, Hatchback or SUV? ", "(Saloon|Estate|Hatchback|SUV)", "Invalid selection. Please enter Saloon, Estate, Hatchback, or SUV.");
+        boolean validBodyType = false;
+        Car car = null;
 
-        switch (bodyType) {
-            case "Saloon":
-                vehicles[index] = new Saloon(make, model, year, gearbox, colour, mileage);
-                break;
-            case "Estate":
-                vehicles[index] = new Estate(make, model, year, gearbox, colour, mileage);
-                break;
-            case "Hatchback":
-                vehicles[index] = new Hatchback(make, model, year, gearbox, colour, mileage);
-                break;
-            case "SUV":
-                vehicles[index] = new SUV(make, model, year, gearbox, colour, mileage);
-                break;
+        while (!validBodyType) {
+            System.out.println("Select the body type:");
+            System.out.println("1. Saloon");
+            System.out.println("2. Estate");
+            System.out.println("3. Hatchback");
+            System.out.println("4. SUV");
+            int bodyTypeChoice = Reader.readInt("Option: ");
+
+            switch (bodyTypeChoice) {
+                case 1:
+                    car = new Saloon(make, model, year, gearbox, colour, mileage);
+                    validBodyType = true;
+                    break;
+                case 2:
+                    car = new Estate(make, model, year, gearbox, colour, mileage);
+                    validBodyType = true;
+                    break;
+                case 3:
+                    car = new Hatchback(make, model, year, gearbox, colour, mileage);
+                    validBodyType = true;
+                    break;
+                case 4:
+                    car = new SUV(make, model, year, gearbox, colour, mileage);
+                    validBodyType = true;
+                    break;
+                default:
+                    System.out.println("Invalid selection. Please enter a number between 1 and 4.");
+            }
         }
+        vehicles[index] = car;
 
         if (Reader.readBoolean("Would you like to add any options to the car?")) {
             addCarOptions((Car) vehicles[index]);
@@ -134,8 +151,22 @@ public abstract class Vehicle {
         if (Reader.readBoolean("Add Parking Sensors?")) car.addOption(Option.PARKING_SENSORS);
         if (Reader.readBoolean("Add Tow Bar?")) car.addOption(Option.TOW_BAR);
         if (Reader.readBoolean("Add Roof Rack?")) car.addOption(Option.ROOF_RACK);
-        if (Reader.readBoolean("Add All Wheel Drive?")) car.addOption(Option.ALL_WHEEL_DRIVE);
-        if (Reader.readBoolean("Add Third Row Seat?")) car.addOption(Option.THIRD_ROW_SEAT);
+
+        if (Reader.readBoolean("Add All Wheel Drive?")) {
+            if (car instanceof SUV) {
+                car.addOption(Option.ALL_WHEEL_DRIVE);
+            } else {
+                System.out.println("AWD is only available for SUVs.");
+            }
+        }
+
+        if (Reader.readBoolean("Add Third Row Seat?")) {
+            if (car instanceof Estate) {
+                car.addOption(Option.THIRD_ROW_SEAT);
+            } else {
+                System.out.println("Third Row Seat is only available for Estates.");
+            }
+        }
     }
 
     private static void addMotorbike(Vehicle[] vehicles, int index) {
