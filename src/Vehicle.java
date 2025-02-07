@@ -315,8 +315,22 @@ public abstract class Vehicle {
 
         if (index >= 0 && index < vehicles.length && vehicles[index] != null) {
             int newMileage = Reader.readInt("What mileage would you like to change it to? ");
-            vehicles[index].setMileage(newMileage);
-            System.out.println("Updated details: " + vehicles[index].getMake() + " " + vehicles[index].getModel() + " " + vehicles[index].getMileage() + " Miles");
+            int currentMileage = vehicles[index].getMileage();
+
+            if (newMileage < currentMileage) {
+                boolean confirm = Reader.readBoolean("Are you sure you want to REDUCE the mileage? (Y/N): ");
+                if (confirm) {
+                    vehicles[index].setMileage(newMileage);
+                    System.out.println("Mileage updated. New details: " + vehicles[index].getMake() + " " + vehicles[index].getModel() + " " + vehicles[index].getMileage() + " Miles");
+                } else {
+                    System.out.println("Mileage change cancelled.");
+                }
+            } else if (newMileage == currentMileage) {
+                System.out.println("The new mileage is the same as the current mileage. No change made.");
+            } else {
+                vehicles[index].setMileage(newMileage);
+                System.out.println("Mileage updated. New details: " + vehicles[index].getMake() + " " + vehicles[index].getModel() + " " + vehicles[index].getMileage() + " Miles");
+            }
         } else {
             System.out.println("Invalid choice. No mileage changed.");
         }
