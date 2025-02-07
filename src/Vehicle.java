@@ -107,36 +107,35 @@ public abstract class Vehicle {
         Gearbox gearbox = Reader.readEnum("Please enter the gearbox type (Manual or Auto): ", Gearbox.class);
         CarColour colour = Reader.readEnum("Please enter the colour: ", CarColour.class);
         int mileage = Reader.readInt("Please enter the mileage: ");
-        BodyType.Body body = Reader.readEnum("Is the car a Saloon, Estate, Hatchback or SUV? ", BodyType.Body.class);
+        String bodyType = Reader.readPattern("Is the car a Saloon, Estate, Hatchback or SUV? ", "(Saloon|Estate|Hatchback|SUV)", "Invalid selection. Please enter Saloon, Estate, Hatchback, or SUV.");
 
-        vehicles[index] = new Car(make, model, year, gearbox, colour, mileage, body);
+        switch (bodyType) {
+            case "Saloon":
+                vehicles[index] = new Saloon(make, model, year, gearbox, colour, mileage);
+                break;
+            case "Estate":
+                vehicles[index] = new Estate(make, model, year, gearbox, colour, mileage);
+                break;
+            case "Hatchback":
+                vehicles[index] = new Hatchback(make, model, year, gearbox, colour, mileage);
+                break;
+            case "SUV":
+                vehicles[index] = new SUV(make, model, year, gearbox, colour, mileage);
+                break;
+        }
 
         if (Reader.readBoolean("Would you like to add any options to the car?")) {
-            addCarOptions(vehicles[index], body);
+            addCarOptions((Car) vehicles[index]);
         }
     }
 
-    private static void addCarOptions(Vehicle vehicle, BodyType.Body body) {
-        if (Reader.readBoolean("Add Sat-Nav?")) vehicle.addOption(Option.SAT_NAV);
-        if (Reader.readBoolean("Add Parking Sensors?")) vehicle.addOption(Option.PARKING_SENSORS);
-        if (Reader.readBoolean("Add Tow Bar?")) vehicle.addOption(Option.TOW_BAR);
-        if (Reader.readBoolean("Add Roof Rack?")) vehicle.addOption(Option.ROOF_RACK);
-
-        if (Reader.readBoolean("Add All Wheel Drive?")) {
-            if (body == BodyType.Body.SUV) {
-                vehicle.addOption(Option.ALL_WHEEL_DRIVE);
-            } else {
-                System.out.println("AWD is only available for SUVs.");
-            }
-        }
-
-        if (Reader.readBoolean("Add Third Row Seat?")) {
-            if (body == BodyType.Body.ESTATE) {
-                vehicle.addOption(Option.THIRD_ROW_SEAT);
-            } else {
-                System.out.println("Third Row Seat is only available for Estates.");
-            }
-        }
+    private static void addCarOptions(Car car) {
+        if (Reader.readBoolean("Add Sat-Nav?")) car.addOption(Option.SAT_NAV);
+        if (Reader.readBoolean("Add Parking Sensors?")) car.addOption(Option.PARKING_SENSORS);
+        if (Reader.readBoolean("Add Tow Bar?")) car.addOption(Option.TOW_BAR);
+        if (Reader.readBoolean("Add Roof Rack?")) car.addOption(Option.ROOF_RACK);
+        if (Reader.readBoolean("Add All Wheel Drive?")) car.addOption(Option.ALL_WHEEL_DRIVE);
+        if (Reader.readBoolean("Add Third Row Seat?")) car.addOption(Option.THIRD_ROW_SEAT);
     }
 
     private static void addMotorbike(Vehicle[] vehicles, int index) {
@@ -160,8 +159,7 @@ public abstract class Vehicle {
         if (index >= 0 && index < vehicles.length && vehicles[index] != null) {
             Vehicle vehicle = vehicles[index];
             if (vehicle instanceof Car) {
-                BodyType.Body body = ((Car) vehicle).getBody();
-                addCarOptions(vehicle, body);
+                addCarOptions((Car) vehicle);
             } else if (vehicle instanceof Motorbike) {
                 if (Reader.readBoolean("Add Luggage Box?")) {
                     vehicle.addOption(Option.LUGGAGE_BOX);

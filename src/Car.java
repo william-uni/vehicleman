@@ -1,17 +1,11 @@
 import java.util.ArrayList;
 
-public class Car extends Vehicle {
-    private final BodyType.Body body;
+public abstract class Car extends Vehicle {
     private final ArrayList<Option> options;
 
-    public Car(String make, String model, int year, Gearbox gearbox, CarColour colour, int mileage, BodyType.Body body) {
+    public Car(String make, String model, int year, Gearbox gearbox, CarColour colour, int mileage) {
         super(make, model, year, gearbox, colour, mileage);
-        this.body = body;
         this.options = new ArrayList<>();
-    }
-
-    public BodyType.Body getBody() {
-        return body;
     }
 
     public void addOption(Option option) {
@@ -22,8 +16,8 @@ public class Car extends Vehicle {
         return options;
     }
 
+    @Override
     public void printDetails() {
-        System.out.println("Car Details:");
         System.out.println(
                 "Make: " + getMake() + "\n" +
                         "Model: " + getModel() + "\n" +
@@ -32,8 +26,7 @@ public class Car extends Vehicle {
                         "Colour: " + getColour().toString().substring(0, 1).toUpperCase() + getColour().toString().substring(1).toLowerCase() + "\n" +
                         "Mileage: " + getMileage() + "\n" +
                         "VIN: " + getVIN() + "\n" +
-                        "Body Type: " + body.toString().substring(0, 1).toUpperCase() + body.toString().substring(1).toLowerCase() + "\n" +
-                        "Options: " + options
-                        + "\n");
+                        "Options: " + options + "\n"
+        );
     }
 }
