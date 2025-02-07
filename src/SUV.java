@@ -1,5 +1,5 @@
 public class SUV extends Car {
-    public SUV(String make, String model, int year, Gearbox gearbox, CarColour colour, int mileage) {
+    public SUV(Make make, String model, int year, Gearbox gearbox, CarColour colour, int mileage) {
         super(make, model, year, gearbox, colour, mileage);
     }
 

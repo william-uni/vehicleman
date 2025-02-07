@@ -1,5 +1,5 @@
 public class Hatchback extends Car {
-    public Hatchback(String make, String model, int year, Gearbox gearbox, CarColour colour, int mileage) {
+    public Hatchback(Make make, String model, int year, Gearbox gearbox, CarColour colour, int mileage) {
         super(make, model, year, gearbox, colour, mileage);
     }
 

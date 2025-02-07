@@ -3,13 +3,17 @@ import java.util.ArrayList;
 public class Motorbike extends Vehicle {
     private final ArrayList<Option> options;
 
-    public Motorbike(String make, String model, int year, Gearbox gearbox, CarColour colour, int mileage) {
+    public Motorbike(Make make, String model, int year, Gearbox gearbox, CarColour colour, int mileage) {
         super(make, model, year, gearbox, colour, mileage);
         this.options = new ArrayList<>();
     }
 
     public void addOption(Option option) {
-        this.options.add(option);
+        if (!this.options.contains(option)) {
+            this.options.add(option);
+        } else {
+            System.out.println(option + " has already been added to the motorbike.");
+        }
     }
 
     public ArrayList<Option> getOptions() {
@@ -20,8 +24,8 @@ public class Motorbike extends Vehicle {
         this.options.remove(option);
     }
 
+    @Override
     public void printDetails() {
-        System.out.println("Motorbike Details:");
         System.out.println(
                 "Make: " + getMake() + "\n" +
                         "Model: " + getModel() + "\n" +
@@ -30,7 +34,7 @@ public class Motorbike extends Vehicle {
                         "Colour: " + getColour().toString().substring(0, 1).toUpperCase() + getColour().toString().substring(1).toLowerCase() + "\n" +
                         "Mileage: " + getMileage() + "\n" +
                         "VIN: " + getVIN() + "\n" +
-                        "Options: " + options
-                        + "\n");
+                        "Options: " + options + "\n"
+        );
     }
 }

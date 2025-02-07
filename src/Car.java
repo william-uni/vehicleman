@@ -3,16 +3,16 @@ import java.util.ArrayList;
 public abstract class Car extends Vehicle {
     private final ArrayList<Option> options;
 
-    public Car(String make, String model, int year, Gearbox gearbox, CarColour colour, int mileage) {
+    public Car(Make make, String model, int year, Gearbox gearbox, CarColour colour, int mileage) {
         super(make, model, year, gearbox, colour, mileage);
         this.options = new ArrayList<>();
     }
 
     public void addOption(Option option) {
-        if (!this.options.contains(option)){
+        if (!this.options.contains(option)) {
             this.options.add(option);
         } else {
-            System.out.println(option + " Has already been added to this car");
+            System.out.println(option + " has already been added to the car.");
         }
     }
 

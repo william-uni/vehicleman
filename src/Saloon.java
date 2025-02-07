@@ -1,5 +1,5 @@
 public class Saloon extends Car {
-    public Saloon(String make, String model, int year, Gearbox gearbox, CarColour colour, int mileage) {
+    public Saloon(Make make, String model, int year, Gearbox gearbox, CarColour colour, int mileage) {
         super(make, model, year, gearbox, colour, mileage);
     }
 

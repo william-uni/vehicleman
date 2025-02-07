@@ -2,7 +2,7 @@ import devtools.util.Reader;
 
 public abstract class Vehicle {
     // Setting Up Main Variables
-    private final String make;
+    private final Make make;
     private final String model;
     private final int year;
     private final Gearbox gearbox; // Type
@@ -11,7 +11,7 @@ public abstract class Vehicle {
     private int mileage;
 
     // Constructor To Initialise Values / Take the Class Value
-    public Vehicle(String make, String model, int year, Gearbox gearbox, CarColour colour, int mileage) {
+    public Vehicle(Make make, String model, int year, Gearbox gearbox, CarColour colour, int mileage) {
         this.make = make;
         this.model = model;
         this.year = year;
@@ -89,7 +89,7 @@ public abstract class Vehicle {
         System.arraycopy(vehicles, 0, expandedVehicles, 0, vehicles.length);
 
         for (int i = vehicles.length; i < expandedVehicles.length; i++) {
-            String type = Reader.readPattern("Select vehicle type: " + "\n" + "1. Car" + "\n" + "2. Motorbike" + "\n" + "Option ", "[12]", "Invalid selection. Please enter 1 for Car or 2 for Motorbike.");
+            String type = Reader.readPattern("Select vehicle type (1 for Car, 2 for Motorbike): ", "[12]", "Invalid selection. Please enter 1 for Car or 2 for Motorbike.");
 
             if (type.equals("1")) {
                 addCar(expandedVehicles, i);
@@ -101,12 +101,12 @@ public abstract class Vehicle {
     }
 
     private static void addCar(Vehicle[] vehicles, int index) {
-        String make = Reader.readLine("Please enter the make: ");
+        Make make = Reader.readEnum("Please enter the make: ", Make.class);
         String model = Reader.readLine("Please enter the model: ");
         int year = Reader.readInt("Please enter the year: ");
         Gearbox gearbox = Reader.readEnum("Please enter the gearbox type (Manual or Auto): ", Gearbox.class);
         CarColour colour = Reader.readEnum("Please enter the colour: ", CarColour.class);
-        int mileage = Reader.readInt("Please enter the mileage: ", 0, 1000000);
+        int mileage = Reader.readInt("Please enter the mileage: ",0,1000000);
         boolean validBodyType = false;
         Car car = null;
 
@@ -116,7 +116,7 @@ public abstract class Vehicle {
             System.out.println("2. Estate");
             System.out.println("3. Hatchback");
             System.out.println("4. SUV");
-            int bodyTypeChoice = Reader.readInt("Option: ");
+            int bodyTypeChoice = Reader.readInt("Enter the number corresponding to the body type: ");
 
             switch (bodyTypeChoice) {
                 case 1:
@@ -139,10 +139,11 @@ public abstract class Vehicle {
                     System.out.println("Invalid selection. Please enter a number between 1 and 4.");
             }
         }
+
         vehicles[index] = car;
 
         if (Reader.readBoolean("Would you like to add any options to the car?")) {
-            addCarOptions((Car) vehicles[index]);
+            addCarOptions(car);
         }
     }
 
@@ -170,12 +171,12 @@ public abstract class Vehicle {
     }
 
     private static void addMotorbike(Vehicle[] vehicles, int index) {
-        String make = Reader.readLine("Please enter the make: ");
+        Make make = Reader.readEnum("Please enter the make: ", Make.class);
         String model = Reader.readLine("Please enter the model: ");
         int year = Reader.readInt("Please enter the year: ");
         Gearbox gearbox = Reader.readEnum("Please enter the gearbox type (Manual or Auto): ", Gearbox.class);
         CarColour colour = Reader.readEnum("Please enter the colour: ", CarColour.class);
-        int mileage = Reader.readInt("Please enter the mileage: ", 0, 1000000);
+        int mileage = Reader.readInt("Please enter the mileage: ",0,1000000);
 
         vehicles[index] = new Motorbike(make, model, year, gearbox, colour, mileage);
 
@@ -215,10 +216,10 @@ public abstract class Vehicle {
             }
             System.out.println("Vehicle not found.");
         } else if (searchChoice == 2) {
-            String make = Reader.readLine("Enter the make of the vehicle to search: ");
+            Make make = Reader.readEnum("Enter the make of the vehicle to search: ", Make.class);
             boolean found = false;
             for (Vehicle vehicle : vehicles) {
-                if (vehicle != null && vehicle.getMake().equalsIgnoreCase(make)) {
+                if (vehicle != null && vehicle.getMake() == make) {
                     System.out.println("Found vehicle: " + vehicle.getMake() + " " + vehicle.getModel());
                     found = true;
                 }
@@ -226,7 +227,7 @@ public abstract class Vehicle {
             if (found) {
                 String model = Reader.readLine("Enter the model of the vehicle to search: ");
                 for (Vehicle vehicle : vehicles) {
-                    if (vehicle != null && vehicle.getMake().equalsIgnoreCase(make) && vehicle.getModel().equalsIgnoreCase(model)) {
+                    if (vehicle != null && vehicle.getMake() == make && vehicle.getModel().equalsIgnoreCase(model)) {
                         vehicle.printDetails();
                         return;
                     }
@@ -241,7 +242,7 @@ public abstract class Vehicle {
     }
 
     // Getters
-    public String getMake() {
+    public Make getMake() {
         return make;
     }
 
@@ -288,7 +289,7 @@ public abstract class Vehicle {
                 System.out.println("The vehicle is already " + currentColour.toString().toLowerCase() + ". No colour change needed.");
             } else {
                 vehicles[index].setColour(newColour);
-                System.out.println("Updated Details: " + vehicles[index].getMake() + " " + vehicles[index].getModel() + " " + vehicles[index].getColour());
+                System.out.println("Updated details: " + vehicles[index].getMake() + " " + vehicles[index].getModel() + " " + vehicles[index].getColour());
             }
         } else {
             System.out.println("Invalid choice. No colour changed.");
