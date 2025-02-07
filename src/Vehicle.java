@@ -50,28 +50,28 @@ public abstract class Vehicle {
     }
 
     public static void removeVehicle(Vehicle[] vehicles) {
-            System.out.println("Vehicles in the database:");
-            for (int i = 0; i < vehicles.length; i++) {
-                if (vehicles[i] != null) {
-                    System.out.println((i + 1) + ": " + vehicles[i].getMake() + " " + vehicles[i].getModel());
-                }
-            }
-
-            int index = Reader.readInt("Enter the number of the vehicle to remove: ") - 1;
-
-            if (index >= 0 && index < vehicles.length && vehicles[index] != null) {
-                System.out.println("Removing: " + vehicles[index].getMake() + " " + vehicles[index].getModel());
-                vehicles[index] = null;
-
-                // Shift array to fill the gap
-                for (int i = index; i < vehicles.length - 1; i++) {
-                    vehicles[i] = vehicles[i + 1];
-                }
-                vehicles[vehicles.length - 1] = null;
-            } else {
-                System.out.println("Invalid choice. No vehicle removed.");
+        System.out.println("Vehicles in the database:");
+        for (int i = 0; i < vehicles.length; i++) {
+            if (vehicles[i] != null) {
+                System.out.println((i + 1) + ": " + vehicles[i].getMake() + " " + vehicles[i].getModel());
             }
         }
+
+        int index = Reader.readInt("Enter the number of the vehicle to remove: ") - 1;
+
+        if (index >= 0 && index < vehicles.length && vehicles[index] != null) {
+            System.out.println("Removing: " + vehicles[index].getMake() + " " + vehicles[index].getModel());
+            vehicles[index] = null;
+
+            // Shift array to fill the gap
+            for (int i = index; i < vehicles.length - 1; i++) {
+                vehicles[i] = vehicles[i + 1];
+            }
+            vehicles[vehicles.length - 1] = null;
+        } else {
+            System.out.println("Invalid choice. No vehicle removed.");
+        }
+    }
 
     public static void dataConclusion(Vehicle[] vehicles) {
         if (Reader.readBoolean("Would you like an output of all current vehicles?")) {

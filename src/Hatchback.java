@@ -1,0 +1,11 @@
+public class Hatchback extends Car {
+    public Hatchback(String make, String model, int year, Gearbox gearbox, CarColour colour, int mileage) {
+        super(make, model, year, gearbox, colour, mileage);
+    }
+
+    @Override
+    public void printDetails() {
+        System.out.println("Hatchback Details:");
+        super.printDetails();
+    }
+}
