@@ -9,7 +9,11 @@ public abstract class Car extends Vehicle {
     }
 
     public void addOption(Option option) {
-        this.options.add(option);
+        if (!this.options.contains(option)){
+            this.options.add(option);
+        } else {
+            System.out.println(option + " Has already been added to this car");
+        }
     }
 
     public ArrayList<Option> getOptions() {
