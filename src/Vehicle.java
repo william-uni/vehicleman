@@ -106,7 +106,7 @@ public abstract class Vehicle {
         int year = Reader.readInt("Please enter the year: ");
         Gearbox gearbox = Reader.readEnum("Please enter the gearbox type (Manual or Auto): ", Gearbox.class);
         CarColour colour = Reader.readEnum("Please enter the colour: ", CarColour.class);
-        int mileage = Reader.readInt("Please enter the mileage: ");
+        int mileage = Reader.readInt("Please enter the mileage: ", 0, 1000000);
         boolean validBodyType = false;
         Car car = null;
 
@@ -175,7 +175,7 @@ public abstract class Vehicle {
         int year = Reader.readInt("Please enter the year: ");
         Gearbox gearbox = Reader.readEnum("Please enter the gearbox type (Manual or Auto): ", Gearbox.class);
         CarColour colour = Reader.readEnum("Please enter the colour: ", CarColour.class);
-        int mileage = Reader.readInt("Please enter the mileage: ");
+        int mileage = Reader.readInt("Please enter the mileage: ", 0, 1000000);
 
         vehicles[index] = new Motorbike(make, model, year, gearbox, colour, mileage);
 
@@ -281,9 +281,15 @@ public abstract class Vehicle {
         int index = Reader.readInt("Enter the number of the vehicle to change colour: ") - 1;
 
         if (index >= 0 && index < vehicles.length && vehicles[index] != null) {
+            CarColour currentColour = vehicles[index].getColour();
             CarColour newColour = Reader.readEnum("What colour would you like to change it to? ", CarColour.class);
-            vehicles[index].setColour(newColour);
-            System.out.println("Updated details: " + vehicles[index].getMake() + " " + vehicles[index].getModel() + " " + vehicles[index].getColour());
+
+            if (currentColour == newColour) {
+                System.out.println("The vehicle is already " + currentColour.toString().toLowerCase() + ". No colour change needed.");
+            } else {
+                vehicles[index].setColour(newColour);
+                System.out.println("Updated Details: " + vehicles[index].getMake() + " " + vehicles[index].getModel() + " " + vehicles[index].getColour());
+            }
         } else {
             System.out.println("Invalid choice. No colour changed.");
         }
