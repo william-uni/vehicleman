@@ -5,7 +5,8 @@ public class SUV extends Car {
 
     @Override
     public void printDetails() {
-        System.out.println("SUV Details:");
+
+        System.out.println("Body Type: SUV");
         super.printDetails();
     }
 }

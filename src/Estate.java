@@ -5,7 +5,7 @@ public class Estate extends Car {
 
     @Override
     public void printDetails() {
-        System.out.println("Estate Details:");
+        System.out.println("Body Type: Estate");
         super.printDetails();
     }
 }

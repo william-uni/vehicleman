@@ -5,7 +5,7 @@ public class Hatchback extends Car {
 
     @Override
     public void printDetails() {
-        System.out.println("Hatchback Details:");
+        System.out.println("Body Type: Hatchback");
         super.printDetails();
     }
 }
