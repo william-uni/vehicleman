@@ -44,5 +44,25 @@ public enum Make {
     YAMAHA,
     KTM,
     HARLEY_DAVIDSON,
-    TRIUMPH,
+    TRIUMPH;
+
+    @Override
+    public String toString() {
+        switch (this) {
+            case BMW:
+            case MG:
+            case KTM:
+                return name();
+            default:
+                String name = name().replace('_', ' ').toLowerCase();
+                String[] words = name.split(" ");
+                StringBuilder titleCase = new StringBuilder();
+                for (String word : words) {
+                    titleCase.append(Character.toUpperCase(word.charAt(0)))
+                            .append(word.substring(1))
+                            .append(" ");
+                }
+                return titleCase.toString().trim();
+        }
+    }
 }

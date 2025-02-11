@@ -106,7 +106,7 @@ public abstract class Vehicle {
         int year = Reader.readInt("Please enter the year: ");
         Gearbox gearbox = Reader.readEnum("Please enter the gearbox type (Manual or Auto): ", Gearbox.class);
         CarColour colour = Reader.readEnum("Please enter the colour: ", CarColour.class);
-        int mileage = Reader.readInt("Please enter the mileage: ",0,1000000);
+        int mileage = Reader.readInt("Please enter the mileage: ", 0, 1000000);
         boolean validBodyType = false;
         Car car = null;
 
@@ -176,7 +176,7 @@ public abstract class Vehicle {
         int year = Reader.readInt("Please enter the year: ");
         Gearbox gearbox = Reader.readEnum("Please enter the gearbox type (Manual or Auto): ", Gearbox.class);
         CarColour colour = Reader.readEnum("Please enter the colour: ", CarColour.class);
-        int mileage = Reader.readInt("Please enter the mileage: ",0,1000000);
+        int mileage = Reader.readInt("Please enter the mileage: ", 0, 1000000);
 
         vehicles[index] = new Motorbike(make, model, year, gearbox, colour, mileage);
 
