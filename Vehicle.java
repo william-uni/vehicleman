@@ -1,8 +1,9 @@
 import devtools.util.Reader;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Vehicle {
+public abstract class Vehicle implements Serializable {
     private final Make make;
     private final String model;
     private final int year;
