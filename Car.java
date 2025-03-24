@@ -11,8 +11,6 @@ public abstract class Car extends Vehicle {
     public void addOption(Option option) {
         if (!this.options.contains(option)) {
             this.options.add(option);
-        } else {
-            System.out.println(option + " has already been added to the car.");
         }
     }
 
@@ -34,6 +32,6 @@ public abstract class Car extends Vehicle {
 
     @Override
     public void printDetails() {
-        System.out.println(this.toString());
+        // Removed System.out.println(this.toString());
     }
 }

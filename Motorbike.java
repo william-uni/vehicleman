@@ -11,8 +11,6 @@ public class Motorbike extends Vehicle {
     public void addOption(Option option) {
         if (!this.options.contains(option)) {
             this.options.add(option);
-        } else {
-            System.out.println(option + " has already been added to the motorbike.");
         }
     }
 
@@ -36,8 +34,8 @@ public class Motorbike extends Vehicle {
                 "Options: " + options + "\n";
     }
 
-    @Override //toString method to remove system prints
+    @Override
     public void printDetails() {
-        System.out.println(this.toString());
+        // Removed System.out.println(this.toString());
     }
 }

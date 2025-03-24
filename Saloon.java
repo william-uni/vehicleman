@@ -5,7 +5,7 @@ public class Saloon extends Car {
 
     @Override
     public void printDetails() {
-        System.out.println("Body Type: Saloon");
+        // Removed System.out.println("Body Type: Saloon");
         super.printDetails();
     }
 }

@@ -1,4 +1,6 @@
 import devtools.util.Reader;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Vehicle {
     private final Make make;
@@ -19,57 +21,12 @@ public abstract class Vehicle {
         this.VIN = VINGen.generateVIN();
     }
 
-    public static void printAllVehicles(Vehicle[] vehicles) {
-        if (Reader.readBoolean("Would you like an output of all current vehicles?")) {
-            for (Vehicle vehicle : vehicles) {
-                if (vehicle != null) {
-                    vehicle.printDetails();
-                }
-            }
-        }
-    }
-
-    public static void printAllVehiclesNoPrompt(Vehicle[] vehicles) {
-        System.out.println("Here is every item in the database (basic): ");
-        for (int i = 0; i < vehicles.length; i++) {
-            if (vehicles[i] != null) {
-                System.out.println("\n" + (i + 1) + ": " + vehicles[i].getMake() + ", " + vehicles[i].getModel() + ", " + vehicles[i].getYear() + ", " + vehicles[i].getColour() + ", " + vehicles[i].getMileage() + " Miles");
-            }
-        }
-    }
-
-    public static void printAllVehicles2(Vehicle[] vehicles) {
+    public static List<Vehicle> addVehicles(Vehicle[] vehicles, int numVehicles) {
+        List<Vehicle> expandedVehicles = new ArrayList<>();
         for (Vehicle vehicle : vehicles) {
-            if (vehicle != null) {
-                vehicle.printDetails();
-            }
+            expandedVehicles.add(vehicle);
         }
-    }
-
-    public static void removeVehicle(Vehicle[] vehicles) {
-        System.out.println("Vehicles in the database:");
-        for (int i = 0; i < vehicles.length; i++) {
-            if (vehicles[i] != null) {
-                System.out.println((i + 1) + ": " + vehicles[i].getMake() + " " + vehicles[i].getModel());
-            }
-        }
-        int index = Reader.readInt("Enter the number of the vehicle to remove: ") - 1;
-        if (index >= 0 && index < vehicles.length && vehicles[index] != null) {
-            System.out.println("Removing: " + vehicles[index].getMake() + " " + vehicles[index].getModel());
-            vehicles[index] = null;
-            for (int i = index; i < vehicles.length - 1; i++) {
-                vehicles[i] = vehicles[i + 1];
-            }
-            vehicles[vehicles.length - 1] = null;
-        } else {
-            System.out.println("Invalid choice. No vehicle removed.");
-        }
-    }
-
-    public static Vehicle[] addVehicles(Vehicle[] vehicles, int numVehicles) {
-        Vehicle[] expandedVehicles = new Vehicle[vehicles.length + numVehicles];
-        System.arraycopy(vehicles, 0, expandedVehicles, 0, vehicles.length);
-        for (int i = vehicles.length; i < expandedVehicles.length; i++) {
+        for (int i = vehicles.length; i < vehicles.length + numVehicles; i++) {
             String type = Reader.readPattern("Select vehicle type (1 for Car, 2 for Motorbike): ", "[12]", "Invalid selection. Please enter 1 for Car or 2 for Motorbike.");
             if (type.equals("1")) {
                 addCar(expandedVehicles, i);
@@ -80,10 +37,13 @@ public abstract class Vehicle {
         return expandedVehicles;
     }
 
-    private static void addCar(Vehicle[] vehicles, int index) {
+    private static void addCar(List<Vehicle> vehicles, int index) {
         Make make = Reader.readEnum("Please enter the make: ", Make.class);
         String model = Reader.readLine("Please enter the model: ");
         int year = Reader.readInt("Please enter the year: ");
+        if (year > java.time.Year.now().getValue()) {
+            throw new IllegalArgumentException("Invalid year. The vehicle cannot be newer than the current year.");
+        }
         Gearbox gearbox = Reader.readEnum("Please enter the gearbox type (Manual or Auto): ", Gearbox.class);
         CarColour colour = Reader.readEnum("Please enter the colour: ", CarColour.class);
         int mileage = Reader.readInt("Please enter the mileage: ", 0, 1000000);
@@ -117,7 +77,7 @@ public abstract class Vehicle {
                     System.out.println("Invalid selection. Please enter a number between 1 and 4.");
             }
         }
-        vehicles[index] = car;
+        vehicles.add(car);
         if (Reader.readBoolean("Would you like to add any options to the car?")) {
             addCarOptions(car);
         }
@@ -144,16 +104,20 @@ public abstract class Vehicle {
         }
     }
 
-    private static void addMotorbike(Vehicle[] vehicles, int index) {
+    private static void addMotorbike(List<Vehicle> vehicles, int index) {
         Make make = Reader.readEnum("Please enter the make: ", Make.class);
         String model = Reader.readLine("Please enter the model: ");
         int year = Reader.readInt("Please enter the year: ");
+        if (year > java.time.Year.now().getValue()) {
+            throw new IllegalArgumentException("Invalid year. The vehicle cannot be newer than the current year.");
+        }
         Gearbox gearbox = Reader.readEnum("Please enter the gearbox type (Manual or Auto): ", Gearbox.class);
         CarColour colour = Reader.readEnum("Please enter the colour: ", CarColour.class);
         int mileage = Reader.readInt("Please enter the mileage: ", 0, 1000000);
-        vehicles[index] = new Motorbike(make, model, year, gearbox, colour, mileage);
+        Motorbike motorbike = new Motorbike(make, model, year, gearbox, colour, mileage);
+        vehicles.add(motorbike);
         if (Reader.readBoolean("Would you like to add a Luggage Box?")) {
-            vehicles[index].addOption(Option.LUGGAGE_BOX);
+            motorbike.addOption(Option.LUGGAGE_BOX);
         }
     }
 
@@ -210,6 +174,35 @@ public abstract class Vehicle {
             }
         } else {
             System.out.println("Invalid choice. Please try again.");
+        }
+    }
+
+    public static void printAllVehiclesNoPrompt(Vehicle[] vehicles) {
+        System.out.println("Here is every item in the database (basic): ");
+        for (int i = 0; i < vehicles.length; i++) {
+            if (vehicles[i] != null) {
+                System.out.println("\n" + (i + 1) + ": " + vehicles[i].getMake() + ", " + vehicles[i].getModel() + ", " + vehicles[i].getYear() + ", " + vehicles[i].getColour() + ", " + vehicles[i].getMileage() + " Miles");
+            }
+        }
+    }
+
+    public static void removeVehicle(Vehicle[] vehicles) {
+        System.out.println("Vehicles in the database:");
+        for (int i = 0; i < vehicles.length; i++) {
+            if (vehicles[i] != null) {
+                System.out.println((i + 1) + ": " + vehicles[i].getMake() + " " + vehicles[i].getModel());
+            }
+        }
+        int index = Reader.readInt("Enter the number of the vehicle to remove: ") - 1;
+        if (index >= 0 && index < vehicles.length && vehicles[index] != null) {
+            System.out.println("Removing: " + vehicles[index].getMake() + " " + vehicles[index].getModel());
+            vehicles[index] = null;
+            for (int i = index; i < vehicles.length - 1; i++) {
+                vehicles[i] = vehicles[i + 1];
+            }
+            vehicles[vehicles.length - 1] = null;
+        } else {
+            System.out.println("Invalid choice. No vehicle removed.");
         }
     }
 
@@ -270,6 +263,9 @@ public abstract class Vehicle {
     }
 
     public void setMileage(int mileage) {
+        if (mileage < 0 || mileage > 1000000) {
+            throw new IllegalArgumentException("Invalid mileage. Mileage must be between 0 and 1,000,000.");
+        }
         this.mileage = mileage;
     }
 
