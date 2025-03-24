@@ -1,0 +1,4 @@
+public enum CarColour {
+    BLACK, WHITE, GREY, SILVER, BLUE, RED, BROWN, GREEN, BEIGE, YELLOW,
+    GOLD, ORANGE, PURPLE, PINK,
+}
