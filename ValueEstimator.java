@@ -6,6 +6,7 @@ public class ValueEstimator {
         double brandFactor = getBrandFactor(vehicle.getMake());
         double totalFactor = ageFactor + mileageFactor + brandFactor;
 
+
         // Ensure total factor doesn't exceed 1 (100%)
         totalFactor = Math.min(totalFactor, 1.0);
 
@@ -16,9 +17,14 @@ public class ValueEstimator {
         estimatedValue = Math.max(estimatedValue, 0);
         int roundedValue = (int) Math.round(estimatedValue);
 
+
+        if (vehicle instanceof Motorbike) {
+            roundedValue *= 0.5;
+        }
+
         // Prefix with "£"
-        return "£" + roundedValue;
-    }
+                return "£" + roundedValue;
+            }
 
     private static double getBrandFactor(Make make) {
         switch (make) {
