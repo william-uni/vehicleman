@@ -158,7 +158,7 @@ public abstract class Vehicle implements Serializable {
         System.out.println("Here is every item in the database (basic): ");
         for (int i = 0; i < vehicles.length; i++) {
             if (vehicles[i] != null) {
-                System.out.println("\n" + (i + 1) + ": " + vehicles[i].getMake() + ", " + vehicles[i].getModel() + ", " + vehicles[i].getYear() + ", " + vehicles[i].getColour() + ", " + vehicles[i].getMileage() + " Miles");
+                System.out.println("\n" + (i + 1) + ": " + vehicles[i].getMake() + ", " + vehicles[i].getModel() + ", " + vehicles[i].getYear() + ", " + vehicles[i].getColour() + ", " + vehicles[i].getMileage() + " Miles" + ", " + "Estimated Value: " + ValueEstimator.estimateValue(vehicles[i]));
             }
         }
     }

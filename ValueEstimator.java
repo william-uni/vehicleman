@@ -1,10 +1,19 @@
 public class ValueEstimator {
     public static double estimateValue(Vehicle vehicle) {
         double baseValue = 20000; // Base value for calculation
-        double ageFactor = (2025 - vehicle.getYear()) * 0.03; // Adjusted age factor
-        double mileageFactor = vehicle.getMileage() * 0.0001; // Adjusted mileage factor
+        double ageFactor = Math.min((2025 - vehicle.getYear()) * 0.02, 0.5); // Adjusted age factor with a 50% max deduction
+        double mileageFactor = Math.min(vehicle.getMileage() * 0.00005, 0.3); // Adjusted mileage factor with a 30% max deduction
         double brandFactor = getBrandFactor(vehicle.getMake());
-        return baseValue * (1 - (ageFactor + mileageFactor + brandFactor));
+        double totalFactor = ageFactor + mileageFactor + brandFactor;
+
+        // Ensure total factor doesn't exceed 1 (100%)
+        totalFactor = Math.min(totalFactor, 1.0);
+
+        // Calculate estimated value
+        double estimatedValue = baseValue * (1 - totalFactor);
+
+        // Ensure the value doesn't go negative
+        return Math.max(estimatedValue, 0);
     }
 
     private static double getBrandFactor(Make make) {

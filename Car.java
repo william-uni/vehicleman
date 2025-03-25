@@ -30,12 +30,13 @@ public abstract class Car extends Vehicle {
                 "Colour: " + getColour().toString().substring(0, 1).toUpperCase() + getColour().toString().substring(1).toLowerCase() + "\n" +
                 "Mileage: " + getMileage() + "\n" +
                 "VIN: " + getVIN() + "\n" +
-                "Options: " + options + "\n";
+                "Options: " + options + "\n" +
+                "Estimated Value: " + ValueEstimator.estimateValue(this);
     }
 
     @Override
     public void printDetails() {
         System.out.println(this.toString());
-        System.out.println("Estimated Value: " + ValueEstimator.estimateValue(this));
+
     }
 }
