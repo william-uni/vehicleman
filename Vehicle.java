@@ -142,39 +142,15 @@ public abstract class Vehicle implements Serializable {
     }
 
     public static void searchVehicle(Vehicle[] vehicles) {
-        int searchChoice = Reader.readInt("Search by VIN (1) or by Make/Model (2): ");
-        if (searchChoice == 1) {
-            String vin = Reader.readLine("Enter the VIN of the vehicle to search: ");
-            for (Vehicle vehicle : vehicles) {
-                if (vehicle != null && vehicle.getVIN().equalsIgnoreCase(vin)) {
-                    vehicle.printDetails();
-                    return;
-                }
+        String searchKey = Reader.readLine("Enter search key: ").toLowerCase();
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle != null && (vehicle.getMake().toString().toLowerCase().contains(searchKey) ||
+                    vehicle.getModel().toLowerCase().contains(searchKey) ||
+                    vehicle.getColour().toString().toLowerCase().contains(searchKey) ||
+                    vehicle.getVIN().toLowerCase().contains(searchKey) ||
+                    String.valueOf(vehicle.getYear()).contains(searchKey))) {
+                vehicle.printDetails();
             }
-            System.out.println("Vehicle not found.");
-        } else if (searchChoice == 2) {
-            Make make = Reader.readEnum("Enter the make of the vehicle to search: ", Make.class);
-            boolean found = false;
-            for (Vehicle vehicle : vehicles) {
-                if (vehicle != null && vehicle.getMake() == make) {
-                    System.out.println("Found vehicle: " + vehicle.getMake() + " " + vehicle.getModel());
-                    found = true;
-                }
-            }
-            if (found) {
-                String model = Reader.readLine("Enter the model of the vehicle to search: ");
-                for (Vehicle vehicle : vehicles) {
-                    if (vehicle != null && vehicle.getMake() == make && vehicle.getModel().equalsIgnoreCase(model)) {
-                        vehicle.printDetails();
-                        return;
-                    }
-                }
-                System.out.println("Vehicle not found.");
-            } else {
-                System.out.println("No vehicles found with the make: " + make);
-            }
-        } else {
-            System.out.println("Invalid choice. Please try again.");
         }
     }
 
@@ -187,21 +163,18 @@ public abstract class Vehicle implements Serializable {
         }
     }
 
-    public static void removeVehicle(Vehicle[] vehicles) {
+
+    public static void removeVehicle(List<Vehicle> vehicles) {
         System.out.println("Vehicles in the database:");
-        for (int i = 0; i < vehicles.length; i++) {
-            if (vehicles[i] != null) {
-                System.out.println((i + 1) + ": " + vehicles[i].getMake() + " " + vehicles[i].getModel());
+        for (int i = 0; i < vehicles.size(); i++) {
+            if (vehicles.get(i) != null) {
+                System.out.println((i + 1) + ": " + vehicles.get(i).getMake() + " " + vehicles.get(i).getModel());
             }
         }
         int index = Reader.readInt("Enter the number of the vehicle to remove: ") - 1;
-        if (index >= 0 && index < vehicles.length && vehicles[index] != null) {
-            System.out.println("Removing: " + vehicles[index].getMake() + " " + vehicles[index].getModel());
-            vehicles[index] = null;
-            for (int i = index; i < vehicles.length - 1; i++) {
-                vehicles[i] = vehicles[i + 1];
-            }
-            vehicles[vehicles.length - 1] = null;
+        if (index >= 0 && index < vehicles.size() && vehicles.get(index) != null) {
+            System.out.println("Removing: " + vehicles.get(index).getMake() + " " + vehicles.get(index).getModel());
+            vehicles.remove(index);
         } else {
             System.out.println("Invalid choice. No vehicle removed.");
         }

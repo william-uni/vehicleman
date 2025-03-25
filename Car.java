@@ -8,9 +8,12 @@ public abstract class Car extends Vehicle {
         this.options = new ArrayList<>();
     }
 
+    @Override
     public void addOption(Option option) {
         if (!this.options.contains(option)) {
             this.options.add(option);
+        } else {
+            System.out.println("Option already added.");
         }
     }
 
@@ -32,6 +35,7 @@ public abstract class Car extends Vehicle {
 
     @Override
     public void printDetails() {
-        // Removed System.out.println(this.toString());
+        System.out.println(this.toString());
+        System.out.println("Estimated Value: " + ValueEstimator.estimateValue(this));
     }
 }
