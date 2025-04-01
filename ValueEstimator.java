@@ -28,7 +28,7 @@ public class ValueEstimator {
 
     private static double getBrandFactor(Make make) {
         switch (make) {
-            case MERCEDES_BENZ: return 0.2;
+            case MERCEDES_BENZ: return 0.32;
             case DACIA: return 0.1;
             case BMW: return 0.18;
             case AUDI: return 0.17;
