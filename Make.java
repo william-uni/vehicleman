@@ -20,4 +20,13 @@ public enum Make {
                 return titleCase.toString().trim();
         }
     }
+    public static Make searchMake(String searchKey) {
+        for (Make make : Make.values()) {
+            if (make.toString().toLowerCase().contains(searchKey.toLowerCase())) {
+                return make;
+            }
+        }
+        throw new IllegalArgumentException("Invalid make. Please enter a valid make."); // to account for user input error
+    }
+
 }

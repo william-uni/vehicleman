@@ -39,14 +39,16 @@ public abstract class Vehicle implements Serializable {
     }
 
     private static void addCar(List<Vehicle> vehicles, int index) {
-        Make make = Reader.readEnum("Please enter the make: ", Make.class);
+        String makeInput = Reader.readLine("Please enter the make: ");
+        Make make = Make.searchMake(makeInput);
         String model = Reader.readLine("Please enter the model: ");
         int year = Reader.readInt("Please enter the year: ");
         if (year > java.time.Year.now().getValue()) {
             throw new IllegalArgumentException("Invalid year. The vehicle cannot be newer than the current year.");
         }
         Gearbox gearbox = Reader.readEnum("Please enter the gearbox type (Manual or Auto): ", Gearbox.class);
-        CarColour colour = Reader.readEnum("Please enter the colour: ", CarColour.class);
+        String colourInput = Reader.readLine("Please enter the colour: ");
+        CarColour colour = CarColour.searchColour(colourInput);
         int mileage = Reader.readInt("Please enter the mileage: ", 0, 1000000);
         boolean validBodyType = false;
         Car car = null;
@@ -220,7 +222,8 @@ public abstract class Vehicle implements Serializable {
         int index = Reader.readInt("Enter the number of the vehicle to change colour: ") - 1;
         if (index >= 0 && index < vehicles.length && vehicles[index] != null) {
             CarColour currentColour = vehicles[index].getColour();
-            CarColour newColour = Reader.readEnum("What colour would you like to change it to? ", CarColour.class);
+            String colourInput = Reader.readLine("Please enter the new colour: ");
+            CarColour newColour = CarColour.searchColour(colourInput);
             if (currentColour == newColour) {
                 System.out.println("The vehicle is already " + currentColour.toString().toLowerCase() + ". No colour change needed.");
             } else {
@@ -231,7 +234,6 @@ public abstract class Vehicle implements Serializable {
             System.out.println("Invalid choice. No colour changed.");
         }
     }
-
     public int getMileage() {
         return mileage;
     }
