@@ -3,7 +3,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Vehicle implements Serializable {
+public abstract class Vehicle implements Serializable{
     private final Make make;
     private final String model;
     private final int year;
@@ -102,7 +102,7 @@ public abstract class Vehicle implements Serializable {
             if (car instanceof Estate) {
                 car.addOption(Option.THIRD_ROW_SEAT);
             } else {
-                System.out.println("Third Row Seat is only available for Estates.");
+                throw new IllegalArgumentException("Third Row Seat is only available for Estates.");
             }
         }
     }
