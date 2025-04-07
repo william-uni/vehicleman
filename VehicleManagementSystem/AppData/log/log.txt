@@ -1,0 +1,15 @@
+Mon, April 7, 2025. 11:47:36
+java.lang.IllegalArgumentException: Invalid year. The vehicle cannot be newer than the current year.
+	at Vehicle.addCar(Vehicle.java:52)
+	at Vehicle.addVehicles(Vehicle.java:33)
+	at Main.addVehicle(Main.java:20)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at devtools.ui.Application.runMenu(Application.java:291)
+	at devtools.ui.Application.loadMenu(Application.java:251)
+	at devtools.ui.Application.start(Application.java:185)
+	at devtools.ui.Application.start(Application.java:72)
+	at Main.main(Main.java:14)
+
+**********************
+
